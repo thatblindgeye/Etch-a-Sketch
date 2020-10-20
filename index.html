@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Etch-a-Sketch</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page-container">
+      <div class="options-container1">
+        <div class="style-container">
+          <select class="sketch-style">
+            <option>Solid Color</option>
+            <option>Gradient</option>
+            <option>Random Colors</option>
+          </select>
+          <input type="color" class="color-picker" title="Click to choose a color">
+        </div>
+        <input type="checkbox" id="enable-borders">
+        <label for="enable-borders">Enable Borders</label>
+      </div>
+      <div class="grid-container"></div>
+      <div class="options-container2">
+        <div class="size-container">
+          <label for="size">Grid Size</label>
+          <input type="number" id="size" min="2" max="100" value="16" title="Enter a number between 2 and 100">
+        </div>
+
+      </div>
+    </div>
+
+    <!-- script always at bottom of body -->
+    <script src="script.js"></script>
+  </body>
+</html>

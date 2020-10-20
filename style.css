@@ -1,0 +1,183 @@
+/* Remove the left/right gap so content stretches to edge of viewport */
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  box-sizing: border-box;
+}
+
+html {
+  position: relative;
+  min-height: 100vh;
+  background-color: rgb(184, 0, 0);
+  --cells: 16;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.options-container1,
+.options-container2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.options-container1 {
+  width: 210px;
+  margin-top: 25px;
+}
+
+.options-container2 {
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.style-container {
+  display: flex;
+  align-items: center;
+}
+
+.sketch-style {
+  width: 130px;
+  height: 25px;
+  margin-right: 15px;
+  border: 1px solid black;
+  font-size: 0.9rem;
+}
+
+.color-picker {
+  height: 23px;
+  width: 50px;
+  outline: 1px solid black;
+  border: 2px outset white;
+}
+
+.color-picker:hover {
+  cursor: pointer;
+}
+
+.color-picker:hover:active {
+  border: 2px inset white;
+}
+
+.color-picker:disabled {
+  cursor: not-allowed;
+}
+
+#enable-borders {
+  width: 20px;
+  height: 20px;
+  margin-top: 20px;
+}
+
+label[for="enable-borders"] {
+  color: white;
+  font-size: 0.9rem;
+  margin: 20px 0 0 10px;
+}
+
+label[for="size"] {
+  margin-bottom: 5px;
+  color: white;
+}
+
+input[type="number"] {
+  width: 100px;
+  margin: 0 10px 0 10px;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.size-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label[for="size"] {
+  font-size: 0.9rem;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(var(--cells), 1fr);
+  grid-template-rows: repeat(var(--cells), 1fr);
+  background-color: white;
+  width: 90vw;
+  height: 90vw;
+  margin: 25px 0;
+  border: 1px solid black;
+}
+
+.cells {
+  border: 1px solid black;
+}
+
+@media only screen and (min-width: 525px) {
+  .page-container {
+    justify-content: center;
+  }
+
+  .grid-container {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+@media only screen and (min-width: 850px) {
+  .page-container {
+    flex-direction: row;
+  }
+
+  .options-container1,
+  .options-container2 {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border: 1px solid black;
+    width: 150px;
+    height: 300px;
+    margin: 0 25px;
+    padding: 0;
+  }
+
+  .style-container {
+    flex-wrap: wrap;
+  }
+
+  .sketch-style {
+    width: 130px;
+    margin-right: 0;
+  }
+
+  #enable-borders {
+    width: 20px;
+    height: 20px;
+    margin: 40px 0 10px;
+  }
+
+  label[for="enable-borders"] {
+    color: white;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .grid-container {
+    width: 500px;
+    height: 500px;
+  }
+}
