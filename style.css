@@ -1,4 +1,3 @@
-/* Remove the left/right gap so content stretches to edge of viewport */
 * {
   margin: 0;
   padding: 0;
@@ -12,172 +11,293 @@ html {
   min-height: 100vh;
   background-color: rgb(184, 0, 0);
   --cells: 16;
+  --border-on: 1px solid black;
+  --border-off: none;
 }
 
 .page-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.options-container1,
-.options-container2 {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
 }
 
-.options-container1 {
-  width: 210px;
+.options-container {
+  order: 2;
+  width: 90vw;
   margin-top: 25px;
 }
 
-.options-container2 {
-  width: 100%;
-  margin-bottom: 25px;
+.sketch-options {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-.style-container {
+p {
+  font-size: 0.8rem;
+  color: white;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.pen-options {
+  margin: 0 5px;
+}
+
+.grid-options {
   display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+.size-options {
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
-.sketch-style {
-  width: 130px;
-  height: 25px;
-  margin-right: 15px;
-  border: 1px solid black;
-  font-size: 0.9rem;
+label[for="size"] {
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+  color: white;
 }
 
+#size {
+  width: 100px;
+  text-align: center;
+}
+
+/* styles for the buttons */
 .color-picker {
-  height: 23px;
-  width: 50px;
-  outline: 1px solid black;
-  border: 2px outset white;
+  width: 40px;
+  height: 40px;
+  border: 2px solid black;
 }
 
 .color-picker:hover {
   cursor: pointer;
 }
 
-.color-picker:hover:active {
-  border: 2px inset white;
+.pen-btn,
+.border-btn {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgb(0, 0, 0);
 }
 
-.color-picker:disabled {
-  cursor: not-allowed;
+.pen-btn {
+  margin-left: 5px;
 }
 
-#enable-borders {
-  width: 20px;
-  height: 20px;
+.border-btn {
+  margin-left: 15px;
+}
+
+.grid-btn {
+  width: 70px;
+  height: 70px;
   margin-top: 20px;
-}
-
-label[for="enable-borders"] {
-  color: white;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid black;
+  text-transform: uppercase;
   font-size: 0.9rem;
-  margin: 20px 0 0 10px;
+  transition: transform 0.25s;
 }
 
-label[for="size"] {
-  margin-bottom: 5px;
+.pen-btn:first-of-type,
+.border-btn:first-of-type {
+  margin-left: 0;
+}
+
+.pen-btn:hover,
+.border-btn:hover,
+.grid-btn:hover {
+  cursor: pointer;
+}
+
+.pen-btn:hover:active,
+.border-btn:hover:active {
+  transform: scale(0.9);
+}
+
+.grid-btn:hover:active {
+  transform: rotate(360deg);
+}
+
+.solid-color {
+  background-image: url("images/Solid-Color.png");
+}
+
+.gradient-color {
+  background-image: url("images/Gradient-Color.png");
+}
+
+.random-color {
+  background-image: url("images/Random-Color.png");
+}
+
+/* toggle slider for enabling/disabling cell borders */
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 63px;
+  height: 28px;
+  margin: 0 18px;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(105, 105, 105);
+  transition: 0.4s;
+  border: 2px solid black;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  width: 18px;
+  height: 18px;
+  left: 2px;
+  bottom: 1px;
+  margin: auto 0;
+  transition: 0.4s;
+  box-shadow: 0 0 15px black;
+  background-color: white;
+  border: 2px solid black;
+}
+
+input:checked + .slider {
+  background-color: white;
+}
+
+input:checked + .slider:before {
+  transform: translateX(33px);
+}
+
+.slider:after {
+  content: "DISABLED";
   color: white;
+  display: block;
+  position: absolute;
+  transform: translate(-50%, 100%);
+  top: 15px;
+  left: 50%;
+  font-size: 0.7rem;
 }
 
-input[type="number"] {
-  width: 100px;
-  margin: 0 10px 0 10px;
-  text-align: center;
-  -moz-appearance: textfield;
+input:checked + .slider:after {
+  content: "ENABLED";
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.slider.round {
+  border-radius: 20px;
 }
 
-.size-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.slider.round:before {
+  border-radius: 20px;
 }
 
-label[for="size"] {
-  font-size: 0.9rem;
+/* style for selected pen option and focused element with tabbing */
+.selected {
+  box-shadow: 0 0 5px 5px rgba(255, 252, 93, 0.5);
 }
 
-.grid-container {
+button:focus,
+.color-picker:focus,
+input:focus + .slider {
+  outline: none;
+  box-shadow: 0 0 5px 2px rgb(255, 252, 93);
+}
+
+/* style for the grid and cells */
+#grid {
   display: grid;
   grid-template-columns: repeat(var(--cells), 1fr);
   grid-template-rows: repeat(var(--cells), 1fr);
-  background-color: white;
   width: 90vw;
   height: 90vw;
-  margin: 25px 0;
-  border: 1px solid black;
+  margin-top: 50px;
+  background-color: white;
+  border: var(--border-on);
 }
 
-.cells {
-  border: 1px solid black;
+.cell {
+  border: var(--border-on);
 }
 
-@media only screen and (min-width: 525px) {
-  .page-container {
-    justify-content: center;
+@media only screen and (min-width: 440px) {
+  .options-container {
+    width: 400px;
   }
 
-  .grid-container {
+  #grid {
+    width: 400px;
+    height: 400px;
+    transition: width 0.25s, height 0.25s;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  #grid {
     width: 500px;
     height: 500px;
   }
 }
 
-@media only screen and (min-width: 850px) {
+@media only screen and (min-width: 950px) {
   .page-container {
-    flex-direction: row;
+    display: block;
   }
 
-  .options-container1,
-  .options-container2 {
-    flex-direction: column;
+  .options-container {
+    position: absolute;
+    width: 160px;
+    margin-top: 25px;
+    left: 50px;
+  }
+
+  .sketch-options {
     justify-content: center;
-    align-items: flex-start;
-    border: 1px solid black;
-    width: 150px;
-    height: 300px;
-    margin: 0 25px;
-    padding: 0;
   }
 
-  .style-container {
+  .pen-options {
+    margin: 40px 0;
+  }
+
+  .grid-options {
+    justify-content: center;
     flex-wrap: wrap;
   }
 
-  .sketch-style {
-    width: 130px;
-    margin-right: 0;
+  .grid-btn {
+    margin-top: 15px;
   }
 
-  #enable-borders {
-    width: 20px;
-    height: 20px;
-    margin: 40px 0 10px;
+  .grid-btn:first-child {
+    margin-right: 10px;
   }
 
-  label[for="enable-borders"] {
-    color: white;
-    font-size: 0.9rem;
-    margin: 0;
+  #create {
+    order: 2;
   }
 
-  .grid-container {
-    width: 500px;
-    height: 500px;
+  #clear {
+    order: 3;
+  }
+
+  #grid {
+    margin: 50px auto;
   }
 }

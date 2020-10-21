@@ -8,26 +8,38 @@
   </head>
   <body>
     <div class="page-container">
-      <div class="options-container1">
-        <div class="style-container">
-          <select class="sketch-style">
-            <option>Solid Color</option>
-            <option>Gradient</option>
-            <option>Random Colors</option>
-          </select>
-          <input type="color" class="color-picker" title="Click to choose a color">
-        </div>
-        <input type="checkbox" id="enable-borders">
-        <label for="enable-borders">Enable Borders</label>
-      </div>
-      <div class="grid-container"></div>
-      <div class="options-container2">
-        <div class="size-container">
-          <label for="size">Grid Size</label>
-          <input type="number" id="size" min="2" max="100" value="16" title="Enter a number between 2 and 100">
-        </div>
+      <div class="options-container">
+        <div class="sketch-options">
+          <div class="color-options>">
+            <p>Color</p>
+            <input type="color" class="color-picker" title="Choose a color" tabindex="1">
+          </div>
+          <div class="pen-options">
+            <p>Pen Options</p>
+            <button type="button" title="Solid Color" class="solid-color pen-btn" tabindex="2"></button>
+            <button type="button" title="Gradient Color" class="selected gradient-color pen-btn" tabindex="3"></button>
+            <button type="button" title="Random Colors" class="random-color pen-btn" tabindex="4"></button>
+          </div>
+          <div class="border-options">
+            <p>Border Options</p>
 
+            <label id="toggle" class="toggle">
+              <input type="checkbox" id="slider" tabindex="5" checked>
+              <span class="slider round"></span>
+            </label>
+
+          </div>
       </div>
+        <div class="grid-options">
+          <button type="button" id="create" class="grid-btn" tabindex="7">Create</button>
+          <div class="size-options">
+            <label for="size">Grid Size</label>
+            <input type="number" id="size" tabindex="6" min="2" max="100">
+          </div>
+          <button type="button" id="clear" class="grid-btn" tabindex="8">Clear</button>
+        </div>
+      </div>
+      <div id="grid"></div>
     </div>
 
     <!-- script always at bottom of body -->
