@@ -11,7 +11,7 @@ html {
   min-height: 100vh;
   background-color: rgb(184, 0, 0);
   --cells: 16;
-  --border-on: 1px solid black;
+  --border-on: 0.5px solid black;
   --border-off: none;
 }
 
@@ -24,19 +24,23 @@ html {
 .options-container {
   order: 2;
   width: 90vw;
-  margin-top: 25px;
+  margin: 25px 0;
 }
 
 .sketch-options {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  min-height: 90px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 15px;
 }
 
 p {
   font-size: 0.8rem;
-  color: white;
-  margin-bottom: 8px;
+  color: black;
+  margin-bottom: 5px;
   text-align: center;
 }
 
@@ -44,10 +48,14 @@ p {
   margin: 0 5px;
 }
 
+.border-options + p {
+  margin-top: 25px;
+}
+
 .grid-options {
   display: flex;
   justify-content: space-around;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .size-options {
@@ -57,7 +65,7 @@ p {
 }
 
 label[for="size"] {
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   font-size: 0.8rem;
   color: white;
 }
@@ -67,11 +75,28 @@ label[for="size"] {
   text-align: center;
 }
 
+.grid-instruct {
+  display: none;
+  position: absolute;
+  transform: translateY(40px);
+  width: 100px;
+  margin-top: 5px;
+  padding: 6px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: rgb(255, 255, 255);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+#size:focus + .grid-instruct {
+  display: block;
+}
+
 /* styles for the buttons */
 .color-picker {
   width: 40px;
   height: 40px;
-  border: 2px solid black;
+  border: 3px solid black;
 }
 
 .color-picker:hover {
@@ -141,9 +166,8 @@ label[for="size"] {
 .toggle {
   position: relative;
   display: inline-block;
-  width: 63px;
+  width: 80px;
   height: 28px;
-  margin: 0 18px;
 }
 
 .toggle input {
@@ -173,9 +197,8 @@ label[for="size"] {
   bottom: 1px;
   margin: auto 0;
   transition: 0.4s;
-  box-shadow: 0 0 15px black;
   background-color: white;
-  border: 2px solid black;
+  border: 2px solid rgb(0, 0, 0);
 }
 
 input:checked + .slider {
@@ -183,22 +206,23 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(33px);
+  transform: translateX(50px);
 }
 
 .slider:after {
-  content: "DISABLED";
+  content: "OFF";
   color: white;
   display: block;
   position: absolute;
-  transform: translate(-50%, 100%);
-  top: 15px;
-  left: 50%;
-  font-size: 0.7rem;
+  top: 5px;
+  left: 26px;
+  font-size: 0.75rem;
+  font-weight: bold;
 }
 
 input:checked + .slider:after {
-  content: "ENABLED";
+  content: "ON";
+  color: black;
 }
 
 .slider.round {
@@ -211,14 +235,11 @@ input:checked + .slider:after {
 
 /* style for selected pen option and focused element with tabbing */
 .selected {
-  box-shadow: 0 0 5px 5px rgba(255, 252, 93, 0.5);
+  box-shadow: 0 0 5px 2px rgb(255, 0, 0);
 }
 
-button:focus,
-.color-picker:focus,
 input:focus + .slider {
-  outline: none;
-  box-shadow: 0 0 5px 2px rgb(255, 252, 93);
+  box-shadow: 0 0 5px 1px rgb(0, 0, 0);
 }
 
 /* style for the grid and cells */
@@ -230,10 +251,12 @@ input:focus + .slider {
   height: 90vw;
   margin-top: 50px;
   background-color: white;
-  border: var(--border-on);
+  border: 1px solid black;
+  outline: 5px solid white;
 }
 
 .cell {
+  background-color: white;
   border: var(--border-on);
 }
 
@@ -256,7 +279,7 @@ input:focus + .slider {
   }
 }
 
-@media only screen and (min-width: 950px) {
+@media only screen and (min-width: 990px) {
   .page-container {
     display: block;
   }
@@ -264,25 +287,31 @@ input:focus + .slider {
   .options-container {
     position: absolute;
     width: 160px;
-    margin-top: 25px;
-    left: 50px;
+    margin: 0;
+    left: 75px;
   }
 
   .sketch-options {
     justify-content: center;
+    padding: 10px 0;
   }
 
   .pen-options {
-    margin: 40px 0;
+    margin: 20px 0;
   }
 
   .grid-options {
     justify-content: center;
     flex-wrap: wrap;
+    margin-top: 25px;
+  }
+
+  .grid-instruct {
+    width: 200px;
   }
 
   .grid-btn {
-    margin-top: 15px;
+    margin-top: 20px;
   }
 
   .grid-btn:first-child {
