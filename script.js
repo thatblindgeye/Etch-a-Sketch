@@ -1,25 +1,30 @@
 "use strict";
 
 const grid = document.getElementById("grid");
+const size = document.getElementById("size");
+const solidBtn = document.querySelector(".solid-color");
+const gradientBtn = document.querySelector(".gradient-color");
+const randomBtn = document.querySelector(".random-color");
 const createBtn = document.getElementById("create");
 const clearBtn = document.getElementById("clear");
-const input = document.getElementById("size");
+let penOption = "solid";
+let cells;
 let toggle = document.querySelector("#slider");
 let draw = false;
-let cells;
 let color;
 
 function createGrid() {
-  let size = input.value;
+  let area = size.value ** 2;
   grid.innerHTML = "";
   draw = false;
-  document.documentElement.style.setProperty("--cells", `${size}`);
-  for (let i = 0; i < (size ** 2); i++) {
+  toggle.checked = true;
+  cells = document.getElementsByClassName("cell")
+  document.documentElement.style.setProperty("--cells", `${size.value}`);
+  for (let i = 0; i < area; i++) {
     let newCell = document.createElement("div");
     newCell.className = "cell";
     grid.appendChild(newCell);
   }
-  cells = document.getElementsByClassName("cell");
 }
 
 function clearGrid() {
@@ -43,16 +48,39 @@ function removeDrawToggle() {
 }
 
 function chooseSolid(e) {
-  color = document.querySelector(".color-picker").value;
   e.target.style.backgroundColor = `${color}`;
 }
 
+/*
+Pull the current RGBA of the current cell
+Increase the Alpha by 0.1 each mouseover
+*/
+
 function chooseGradient(e) {
-  color = document.querySelector(".color-picker").value;
   let currentColor = getComputedStyle(e.target).getPropertyValue("background-color");
-  let newColor = hexToRGB(color, 0.1);
+  let opacity = 0.1;
+  let newColor = hexToRGB(color, opacity);
+  let colorArray;
+
+    /*
+  let colorArray;
+  let pos;
+
+  if (currentColor.slice(0, 4) === "rgba") {
+    colorArray = currentColor.split(",");
+    opacity = parseFloat(colorArray[3].slice(0, 3));
+  }
+  */
 
   e.target.style.setProperty("background-color", `${newColor}`);
+}
+
+function chooseRandom(e) {
+  let r = Math.floor(Math.random() * 255);
+  let g = Math.floor(Math.random() * 255);
+  let b = Math.floor(Math.random() * 255);
+  let rgb = `rgb(${r}, ${g}, ${b})`;
+  e.target.style.backgroundColor = `${rgb}`;
 }
 
 function hexToRGB(hex, alpha) {
@@ -64,9 +92,16 @@ function hexToRGB(hex, alpha) {
 }
 
 function fillCells(e) {
+  color = document.querySelector(".color-picker").value;
   if (e.target.className === "cell") {
     if (draw === true) {
-      chooseSolid(e);
+      if (penOption === "solid") {
+        chooseSolid(e);
+      } else if (penOption === "gradient") {
+        chooseGradient(e);
+      } else if (penOption === "random") {
+        chooseRandom(e);
+      }
     }
   }
 }
@@ -86,18 +121,18 @@ function toggleGrid() {
 }
 
 window.addEventListener("load", () => {
-  input.value = 16;
+  size.value = 16;
   toggle.checked = true;
   createGrid();
 });
 
 createBtn.addEventListener("click", () => {
-  if (input.value < 2 || input.value > 100) return;
+  if (size.value < 2 || size.value > 100) return;
   createGrid();
 });
 
-input.addEventListener("keydown", (e) => {
-  if (input.value < 2 || input.value > 100) return;
+size.addEventListener("keydown", (e) => {
+  if (size.value < 2 || size.value > 100) return;
   if (e.key === "Enter") {
     createGrid();
   }
@@ -105,9 +140,21 @@ input.addEventListener("keydown", (e) => {
 
 clearBtn.addEventListener("click", clearGrid);
 
+solidBtn.addEventListener("click", () => {
+  penOption = "solid";
+})
+
+gradientBtn.addEventListener("click", () => {
+  penOption = "gradient";
+})
+
+randomBtn.addEventListener("click", () => {
+  penOption = "random";
+})
+
 grid.addEventListener("click", toggleDraw);
 
-grid.addEventListener("mousemove", fillCells);
+grid.addEventListener("mouseover", fillCells);
 grid.addEventListener("touchstart", (e) => {
   removeDrawToggle();
   draw = true;

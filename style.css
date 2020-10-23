@@ -23,7 +23,7 @@ html {
 
 .options-container {
   order: 2;
-  width: 90vw;
+  width: 95vw;
   margin: 25px 0;
 }
 
@@ -42,6 +42,11 @@ p {
   color: black;
   margin-bottom: 5px;
   text-align: center;
+  font-weight: bold;
+}
+
+.border-options + p {
+  font-weight: normal;
 }
 
 .pen-options {
@@ -68,6 +73,7 @@ label[for="size"] {
   margin-bottom: 5px;
   font-size: 0.8rem;
   color: white;
+  font-weight: bold;
 }
 
 #size {
@@ -80,7 +86,7 @@ label[for="size"] {
   position: absolute;
   transform: translateY(40px);
   width: 100px;
-  margin-top: 5px;
+  margin-top: 15px;
   padding: 6px;
   background-color: rgba(0, 0, 0, 0.8);
   color: rgb(255, 255, 255);
@@ -251,8 +257,8 @@ input:focus + .slider {
   height: 90vw;
   margin-top: 50px;
   background-color: white;
-  border: 1px solid black;
-  outline: 5px solid white;
+  border: 2px solid black;
+  outline: 10px solid white;
 }
 
 .cell {
@@ -262,7 +268,7 @@ input:focus + .slider {
 
 @media only screen and (min-width: 440px) {
   .options-container {
-    width: 400px;
+    width: 420px;
   }
 
   #grid {
