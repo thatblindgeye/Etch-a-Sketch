@@ -16,9 +16,9 @@
           </div>
           <div class="pen-options">
             <p>Pen Options</p>
-            <button type="button" title="Solid Color" class="solid-color pen-btn" tabindex="2"></button>
-            <button type="button" title="Gradient Color" class="selected gradient-color pen-btn" tabindex="3"></button>
-            <button type="button" title="Random Colors" class="random-color pen-btn" tabindex="4"></button>
+            <button type="button" title="Solid Color" class="solid-btn pen-btn selected" tabindex="2"></button>
+            <button type="button" title="Gradient Color" class="gradient-btn pen-btn" tabindex="3"></button>
+            <button type="button" title="Random Colors" class="random-btn pen-btn" tabindex="4"></button>
           </div>
           <div class="border-options">
             <p>Cell Borders</p>
@@ -27,14 +27,15 @@
               <span class="slider round"></span>
             </label>
           </div>
-          <p>Click anywhere within the grid to turn the drawing tool on or off (always on for touchscreen devices)</p>
+          <p>Click anywhere within the grid to turn the drawing tool on or off(always on for touchscreen devices)</p>
       </div>
         <div class="grid-options">
           <button type="button" id="create" class="grid-btn" tabindex="7">Create</button>
           <div class="size-options">
             <label for="size">Grid Size</label>
             <input type="number" id="size" tabindex="6" min="2" max="100">
-            <div class="grid-instruct">Enter a number from 2 to 100 (50 or less recommended for mobile)</div>
+              <p class="grid-instruct">Enter a number from 2 to 100.<br>
+              <b>Note:</b> anything over 50 for tablet/phone may crash browser</p>
           </div>
           <button type="button" id="clear" class="grid-btn" tabindex="8">Clear</button>
         </div>

@@ -84,14 +84,15 @@ label[for="size"] {
 .grid-instruct {
   display: none;
   position: absolute;
-  transform: translateY(40px);
-  width: 100px;
-  margin-top: 15px;
-  padding: 6px;
-  background-color: rgba(0, 0, 0, 0.8);
+  width: 200px;
+  margin-top: 50px;
+  padding: 6px 0;
+  background-color: rgba(0, 0, 0, 0.9);
   color: rgb(255, 255, 255);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-align: center;
+  font-weight: normal;
+  line-height: 2;
 }
 
 #size:focus + .grid-instruct {
@@ -156,15 +157,15 @@ label[for="size"] {
   transform: rotate(360deg);
 }
 
-.solid-color {
+.solid-btn {
   background-image: url("images/Solid-Color.png");
 }
 
-.gradient-color {
+.gradient-btn {
   background-image: url("images/Gradient-Color.png");
 }
 
-.random-color {
+.random-btn {
   background-image: url("images/Random-Color.png");
 }
 
@@ -262,8 +263,27 @@ input:focus + .slider {
 }
 
 .cell {
-  background-color: white;
   border: var(--border-on);
+}
+
+/* shaking animation for clearing grid */
+@keyframes shake {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.shake {
+  animation-name: shake;
+  animation-duration: 0.5s;
+  animation-iteration-count: 2;
+  animation-timing-function: linear;
 }
 
 @media only screen and (min-width: 440px) {
@@ -310,10 +330,6 @@ input:focus + .slider {
     justify-content: center;
     flex-wrap: wrap;
     margin-top: 25px;
-  }
-
-  .grid-instruct {
-    width: 200px;
   }
 
   .grid-btn {

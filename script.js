@@ -2,16 +2,12 @@
 
 const grid = document.getElementById("grid");
 const size = document.getElementById("size");
-const solidBtn = document.querySelector(".solid-color");
-const gradientBtn = document.querySelector(".gradient-color");
-const randomBtn = document.querySelector(".random-color");
-const createBtn = document.getElementById("create");
-const clearBtn = document.getElementById("clear");
+const toggle = document.getElementById("slider");
+let draw = false;
 let penOption = "solid";
 let cells;
-let toggle = document.querySelector("#slider");
-let draw = false;
 let color;
+
 
 function createGrid() {
   let area = size.value ** 2;
@@ -35,7 +31,7 @@ function clearGrid() {
   })
 }
 
-function toggleDraw(e) {
+function toggleDraw() {
   if (!draw) {
     draw = true;
   } else {
@@ -47,32 +43,37 @@ function removeDrawToggle() {
   window.removeEventListener("click", toggleDraw);
 }
 
-function chooseSolid(e) {
-  e.target.style.backgroundColor = `${color}`;
+function removeSelected() {
+  const penBtns = document.querySelectorAll(".pen-btn");
+  penBtns.forEach((penBtns) => {
+    penBtns.classList.remove("selected");
+  })
 }
 
-/*
-Pull the current RGBA of the current cell
-Increase the Alpha by 0.1 each mouseover
-*/
+function chooseSolid(e) {
+  e.target.style.backgroundColor = color;
+}
 
 function chooseGradient(e) {
   let currentColor = getComputedStyle(e.target).getPropertyValue("background-color");
+  let colorArray = currentColor.split(",");
   let opacity = 0.1;
-  let newColor = hexToRGB(color, opacity);
-  let colorArray;
-
-    /*
-  let colorArray;
-  let pos;
-
-  if (currentColor.slice(0, 4) === "rgba") {
-    colorArray = currentColor.split(",");
-    opacity = parseFloat(colorArray[3].slice(0, 3));
+  let alphaStr;
+  if (colorArray.length === 4) {
+    alphaStr = parseFloat(colorArray[3].slice(0, 4));
+    opacity = alphaStr + 0.1;
   }
-  */
+  if (alphaStr <= 0.9) {
+    e.target.style.backgroundColor = hexToRGB(color, opacity);
+  }
+}
 
-  e.target.style.setProperty("background-color", `${newColor}`);
+function hexToRGB(hex, alpha) {
+  let r = parseInt(hex.slice(1, 3), 16);
+  let g = parseInt(hex.slice(3, 5), 16);
+  let b = parseInt(hex.slice(5, 7), 16);
+
+  return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
 }
 
 function chooseRandom(e) {
@@ -80,15 +81,7 @@ function chooseRandom(e) {
   let g = Math.floor(Math.random() * 255);
   let b = Math.floor(Math.random() * 255);
   let rgb = `rgb(${r}, ${g}, ${b})`;
-  e.target.style.backgroundColor = `${rgb}`;
-}
-
-function hexToRGB(hex, alpha) {
-  let r = parseInt(hex.slice(1, 3), 16),
-      g = parseInt(hex.slice(3, 5), 16),
-      b = parseInt(hex.slice(5, 7), 16);
-
-  return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
+  e.target.style.backgroundColor = rgb;
 }
 
 function fillCells(e) {
@@ -120,17 +113,16 @@ function toggleGrid() {
   }
 }
 
+
 window.addEventListener("load", () => {
   size.value = 16;
   toggle.checked = true;
   createGrid();
-});
-
-createBtn.addEventListener("click", () => {
+})
+document.getElementById("create").addEventListener("click", () => {
   if (size.value < 2 || size.value > 100) return;
   createGrid();
-});
-
+})
 size.addEventListener("keydown", (e) => {
   if (size.value < 2 || size.value > 100) return;
   if (e.key === "Enter") {
@@ -138,23 +130,32 @@ size.addEventListener("keydown", (e) => {
   }
 })
 
-clearBtn.addEventListener("click", clearGrid);
+document.getElementById("clear").addEventListener("click", () => {
+  grid.classList.add("shake");
+  setTimeout(clearGrid, 975);
+});
+grid.addEventListener("animationend", () => {
+  grid.classList.remove("shake");
+})
 
-solidBtn.addEventListener("click", () => {
+document.querySelector(".solid-btn").addEventListener("click", (e) => {
   penOption = "solid";
+  removeSelected();
+  e.target.classList.add("selected");
 })
-
-gradientBtn.addEventListener("click", () => {
+document.querySelector(".gradient-btn").addEventListener("click", (e) => {
   penOption = "gradient";
+  removeSelected();
+  e.target.classList.add("selected");
 })
-
-randomBtn.addEventListener("click", () => {
+document.querySelector(".random-btn").addEventListener("click", (e) => {
   penOption = "random";
+  removeSelected();
+  e.target.classList.add("selected");
 })
 
 grid.addEventListener("click", toggleDraw);
-
-grid.addEventListener("mouseover", fillCells);
+grid.addEventListener("mouseover", fillCells)
 grid.addEventListener("touchstart", (e) => {
   removeDrawToggle();
   draw = true;
