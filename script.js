@@ -13,7 +13,6 @@ function createGrid() {
   let area = size.value ** 2;
   grid.innerHTML = "";
   draw = false;
-  toggle.checked = true;
   cells = document.getElementsByClassName("cell")
   document.documentElement.style.setProperty("--cells", `${size.value}`);
   for (let i = 0; i < area; i++) {
@@ -27,7 +26,7 @@ function clearGrid() {
   cells = Array.from(cells);
   draw = false;
   cells.forEach((cells) => {
-    cells.style.backgroundColor = "initial";
+    cells.style.backgroundColor = "white";
   })
 }
 
@@ -39,10 +38,6 @@ function toggleDraw() {
   }
 }
 
-function removeDrawToggle() {
-  window.removeEventListener("click", toggleDraw);
-}
-
 function removeSelected() {
   const penBtns = document.querySelectorAll(".pen-btn");
   penBtns.forEach((penBtns) => {
@@ -50,8 +45,18 @@ function removeSelected() {
   })
 }
 
-function chooseSolid(e) {
-  e.target.style.backgroundColor = color;
+function toggleBorders() {
+  cells = Array.from(cells);
+
+  if (toggle.checked === true) {
+    cells.forEach((cells) => {
+      cells.style.setProperty("border", "var(--border-on)");
+    })
+  } else if (toggle.checked === false) {
+    cells.forEach((cells) => {
+      cells.style.setProperty("border", "var(--border-off)");
+    })
+  }
 }
 
 function chooseGradient(e) {
@@ -63,7 +68,7 @@ function chooseGradient(e) {
     alphaStr = parseFloat(colorArray[3].slice(0, 4));
     opacity = alphaStr + 0.1;
   }
-  if (alphaStr <= 0.9) {
+  if (alphaStr <= 0.9 || currentColor !== hexToRGB(color, 1)) {
     e.target.style.backgroundColor = hexToRGB(color, opacity);
   }
 }
@@ -72,8 +77,11 @@ function hexToRGB(hex, alpha) {
   let r = parseInt(hex.slice(1, 3), 16);
   let g = parseInt(hex.slice(3, 5), 16);
   let b = parseInt(hex.slice(5, 7), 16);
-
-  return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
+  if (alpha === 1){
+    return "rgb(" + r + ", " + g + ", " + b + ")";
+  } else {
+    return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
+  }
 }
 
 function chooseRandom(e) {
@@ -89,27 +97,13 @@ function fillCells(e) {
   if (e.target.className === "cell") {
     if (draw === true) {
       if (penOption === "solid") {
-        chooseSolid(e);
+        e.target.style.backgroundColor = color;
       } else if (penOption === "gradient") {
         chooseGradient(e);
       } else if (penOption === "random") {
         chooseRandom(e);
       }
     }
-  }
-}
-
-function toggleGrid() {
-  cells = Array.from(cells);
-
-  if (toggle.checked === true) {
-    cells.forEach((cells) => {
-      cells.style.setProperty("border", "var(--border-on)");
-    })
-  } else if (toggle.checked === false) {
-    cells.forEach((cells) => {
-      cells.style.setProperty("border", "var(--border-off)");
-    })
   }
 }
 
@@ -121,18 +115,20 @@ window.addEventListener("load", () => {
 })
 document.getElementById("create").addEventListener("click", () => {
   if (size.value < 2 || size.value > 100) return;
+  toggle.checked = true;
   createGrid();
 })
 size.addEventListener("keydown", (e) => {
   if (size.value < 2 || size.value > 100) return;
   if (e.key === "Enter") {
+    toggle.checked = true;
     createGrid();
   }
 })
 
 document.getElementById("clear").addEventListener("click", () => {
   grid.classList.add("shake");
-  setTimeout(clearGrid, 975);
+  setTimeout(clearGrid, 750);
 });
 grid.addEventListener("animationend", () => {
   grid.classList.remove("shake");
@@ -154,12 +150,14 @@ document.querySelector(".random-btn").addEventListener("click", (e) => {
   e.target.classList.add("selected");
 })
 
+toggle.addEventListener("change", toggleBorders);
+
 grid.addEventListener("click", toggleDraw);
 grid.addEventListener("mouseover", fillCells)
 grid.addEventListener("touchstart", (e) => {
-  removeDrawToggle();
   draw = true;
   fillCells(e);
-});
-
-toggle.addEventListener("change", toggleGrid);
+})
+grid.addEventListener("touchend", () => {
+  draw = false;
+})

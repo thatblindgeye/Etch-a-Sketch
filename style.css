@@ -11,7 +11,7 @@ html {
   min-height: 100vh;
   background-color: rgb(184, 0, 0);
   --cells: 16;
-  --border-on: 0.5px solid black;
+  --border-on: 1px solid black;
   --border-off: none;
 }
 
@@ -85,7 +85,7 @@ label[for="size"] {
   display: none;
   position: absolute;
   width: 200px;
-  margin-top: 50px;
+  margin-top: -65px;
   padding: 6px 0;
   background-color: rgba(0, 0, 0, 0.9);
   color: rgb(255, 255, 255);
@@ -106,7 +106,10 @@ label[for="size"] {
   border: 3px solid black;
 }
 
-.color-picker:hover {
+.color-picker:hover,
+.pen-btn:hover,
+.border-btn:hover,
+.grid-btn:hover {
   cursor: pointer;
 }
 
@@ -121,36 +124,24 @@ label[for="size"] {
   margin-left: 5px;
 }
 
-.border-btn {
-  margin-left: 15px;
-}
-
-.grid-btn {
-  width: 70px;
-  height: 70px;
-  margin-top: 20px;
-  border-radius: 50%;
-  background-color: white;
-  border: 2px solid black;
-  text-transform: uppercase;
-  font-size: 0.9rem;
-  transition: transform 0.25s;
-}
-
-.pen-btn:first-of-type,
-.border-btn:first-of-type {
+.pen-btn:first-of-type {
   margin-left: 0;
 }
 
-.pen-btn:hover,
-.border-btn:hover,
-.grid-btn:hover {
-  cursor: pointer;
+.pen-btn:hover:active {
+  transform: scale(0.9);
 }
 
-.pen-btn:hover:active,
-.border-btn:hover:active {
-  transform: scale(0.9);
+.grid-btn {
+  background-image: url("images/Knob-Icon.png");
+  background-color: transparent;
+  width: 70px;
+  height: 70px;
+  margin-top: 20px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transition: transform 0.25s;
 }
 
 .grid-btn:hover:active {
@@ -173,7 +164,7 @@ label[for="size"] {
 .toggle {
   position: relative;
   display: inline-block;
-  width: 80px;
+  width: 89px;
   height: 28px;
 }
 
@@ -213,7 +204,7 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(50px);
+  transform: translateX(58px);
 }
 
 .slider:after {
@@ -222,7 +213,7 @@ input:checked + .slider:before {
   display: block;
   position: absolute;
   top: 5px;
-  left: 26px;
+  left: 30px;
   font-size: 0.75rem;
   font-weight: bold;
 }
@@ -230,6 +221,7 @@ input:checked + .slider:before {
 input:checked + .slider:after {
   content: "ON";
   color: black;
+  left: 32px;
 }
 
 .slider.round {
@@ -281,8 +273,8 @@ input:focus + .slider {
 
 .shake {
   animation-name: shake;
-  animation-duration: 0.5s;
-  animation-iteration-count: 2;
+  animation-duration: 0.25s;
+  animation-iteration-count: 3;
   animation-timing-function: linear;
 }
 
@@ -350,5 +342,12 @@ input:focus + .slider {
 
   #grid {
     margin: 50px auto;
+  }
+}
+
+@media only screen and (min-width: 1100px) {
+  #grid {
+    width: 600px;
+    height: 600px;
   }
 }
