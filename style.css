@@ -4,6 +4,7 @@
   border: 0;
   font-size: 100%;
   box-sizing: border-box;
+  font-family: "Teko", Verdana, sans-serif;
 }
 
 html {
@@ -38,15 +39,16 @@ html {
 }
 
 p {
-  font-size: 0.8rem;
+  font-size: 1.4rem;
   color: black;
-  margin-bottom: 5px;
   text-align: center;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .border-options + p {
-  font-weight: normal;
+  font-family: Verdana;
+  font-size: 0.7rem;
+  font-weight: lighter;
 }
 
 .pen-options {
@@ -70,15 +72,17 @@ p {
 }
 
 label[for="size"] {
-  margin-bottom: 5px;
-  font-size: 0.8rem;
+  font-size: 1.4rem;
   color: white;
   font-weight: bold;
 }
 
 #size {
   width: 100px;
+  padding: 5px 0;
+  font-family: Verdana;
   text-align: center;
+  font-size: 1rem;
 }
 
 .grid-instruct {
@@ -86,13 +90,14 @@ label[for="size"] {
   position: absolute;
   width: 200px;
   margin-top: -65px;
-  padding: 6px 0;
+  padding: 6px 3px;
   background-color: rgba(0, 0, 0, 0.9);
   color: rgb(255, 255, 255);
-  font-size: 0.7rem;
+  font-family: Verdana;
+  font-size: 0.75rem;
   text-align: center;
   font-weight: normal;
-  line-height: 2;
+  line-height: 1.5;
 }
 
 #size:focus + .grid-instruct {
@@ -139,7 +144,7 @@ label[for="size"] {
   height: 70px;
   margin-top: 20px;
   text-transform: uppercase;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   font-weight: bold;
   transition: transform 0.25s;
 }
@@ -212,16 +217,14 @@ input:checked + .slider:before {
   color: white;
   display: block;
   position: absolute;
-  top: 5px;
-  left: 30px;
-  font-size: 0.75rem;
-  font-weight: bold;
+  top: 2px;
+  left: 34px;
+  font-size: 1.1rem;
 }
 
 input:checked + .slider:after {
   content: "ON";
   color: black;
-  left: 32px;
 }
 
 .slider.round {
@@ -255,6 +258,7 @@ input:focus + .slider {
 }
 
 .cell {
+  background-color: white;
   border: var(--border-on);
 }
 
@@ -311,7 +315,7 @@ input:focus + .slider {
 
   .sketch-options {
     justify-content: center;
-    padding: 10px 0;
+    padding: 10px 5px;
   }
 
   .pen-options {

@@ -38,13 +38,6 @@ function toggleDraw() {
   }
 }
 
-function removeSelected() {
-  const penBtns = document.querySelectorAll(".pen-btn");
-  penBtns.forEach((penBtns) => {
-    penBtns.classList.remove("selected");
-  })
-}
-
 function toggleBorders() {
   cells = Array.from(cells);
 
@@ -59,6 +52,13 @@ function toggleBorders() {
   }
 }
 
+function removeSelected() {
+  const penBtns = document.querySelectorAll(".pen-btn");
+  penBtns.forEach((penBtns) => {
+    penBtns.classList.remove("selected");
+  })
+}
+
 function chooseGradient(e) {
   let currentColor = getComputedStyle(e.target).getPropertyValue("background-color");
   let colorArray = currentColor.split(",");
@@ -68,8 +68,12 @@ function chooseGradient(e) {
     alphaStr = parseFloat(colorArray[3].slice(0, 4));
     opacity = alphaStr + 0.1;
   }
-  if (alphaStr <= 0.9 || currentColor !== hexToRGB(color, 1)) {
+  if (currentColor === hexToRGB(color, 1)) return;
+  if (currentColor !== hexToRGB(color, 1)) {
     e.target.style.backgroundColor = hexToRGB(color, opacity);
+  } 
+  if (currentColor !== hexToRGB(color, alphaStr)) {
+    e.target.style.backgroundColor = hexToRGB(color, 0.1);
   }
 }
 
