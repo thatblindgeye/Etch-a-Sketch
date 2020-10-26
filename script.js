@@ -45,7 +45,7 @@ function toggleBorders() {
     cells.forEach((cells) => {
       cells.style.setProperty("border", "var(--border-on)");
     })
-  } else if (toggle.checked === false) {
+  } else {
     cells.forEach((cells) => {
       cells.style.setProperty("border", "var(--border-off)");
     })
@@ -68,13 +68,13 @@ function chooseGradient(e) {
     alphaStr = parseFloat(colorArray[3].slice(0, 4));
     opacity = alphaStr + 0.1;
   }
-  if (currentColor === hexToRGB(color, 1)) return;
-  if (currentColor !== hexToRGB(color, 1)) {
+  if (currentColor === hexToRGB(color, 1)) {
+    return;
+  } else if (currentColor !== hexToRGB(color, alphaStr)) {
+    e.target.style.backgroundColor = hexToRGB(color, 0.1);
+  } else {
     e.target.style.backgroundColor = hexToRGB(color, opacity);
   } 
-  if (currentColor !== hexToRGB(color, alphaStr)) {
-    e.target.style.backgroundColor = hexToRGB(color, 0.1);
-  }
 }
 
 function hexToRGB(hex, alpha) {
@@ -89,9 +89,9 @@ function hexToRGB(hex, alpha) {
 }
 
 function chooseRandom(e) {
-  let r = Math.floor(Math.random() * 255);
-  let g = Math.floor(Math.random() * 255);
-  let b = Math.floor(Math.random() * 255);
+  let r = Math.floor(Math.random() * 256);
+  let g = Math.floor(Math.random() * 256);
+  let b = Math.floor(Math.random() * 256);
   let rgb = `rgb(${r}, ${g}, ${b})`;
   e.target.style.backgroundColor = rgb;
 }
